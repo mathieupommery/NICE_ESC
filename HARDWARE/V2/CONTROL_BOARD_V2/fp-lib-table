@@ -1,0 +1,13 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "Capacitor_SMD_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Capacitor_SMD_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Connector_PinHeader_2.54mm_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Connector_PinHeader_2.54mm_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Controlv2_connector_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Controlv2_connector_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Diode_SMD_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Diode_SMD_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "LED_SMD_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/LED_SMD_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Package_DFN_QFN_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Package_DFN_QFN_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Package_TO_SOT_SMD_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Package_TO_SOT_SMD_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "Resistor_SMD_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/Resistor_SMD_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "samacsys_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/samacsys_local.pretty") (options "") (descr "Empreintes du projet"))
+	(lib (name "samacsys2_local") (type "KiCad") (uri "${KIPRJMOD}/libraries/footprints/samacsys2_local.pretty") (options "") (descr "Empreintes du projet"))
+)

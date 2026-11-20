@@ -1,0 +1,24 @@
+LTspice 26.0.2 for Windows
+Circuit: C:\Users\mathi\Documents\GitHub\PFE_SAFRAN_2026\LTSPICE\DPT_BIG_FOC.net
+Start Time: Mon Nov  9 12:01:18 2026
+Options:abstol = 1e-6 Thev_Induc=1
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = trap
+abstol = 1e-06
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping failed to find operating point. Use".option gminsteps=0" to skip all Gmin stepping.
+Starting source stepping with srcstepmethod=0
+Source stepping succeeded in finding the operating point.
+
+Total elapsed time: 1.538 seconds.
+
+Files loaded:
+C:\Users\mathi\Documents\GitHub\PFE_SAFRAN_2026\LTSPICE\DPT_BIG_FOC.net
+C:\Users\mathi\AppData\Local\LTspice\lib\cmp\standard.dio
+C:\Users\mathi\Documents\GitHub\PFE_SAFRAN_2026\LTSPICE\IAUS300N10S5N015T.lib
+

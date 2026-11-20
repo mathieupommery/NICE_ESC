@@ -1,0 +1,9 @@
+*.kicad_prl
+*.lck
+~*
+_autosave-*
+*-backups/
+.history/
+.history_trim/
+.DS_Store
+Thumbs.db

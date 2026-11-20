@@ -1,0 +1,143 @@
+(footprint "VCUT0714AHD1G308"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "LLP1006-2L")
+	(tags "Diode ESD (Uni-directional)")
+	(property "Reference" "D**"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "80c85232-ab16-4107-b62f-07b29f556e80")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "VCUT0714AHD1G308"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "cd20913e-95e7-47c8-a854-5cdda5ec8209")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d3ba4434-04bc-4ed4-82d5-1585e42ae50c")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7379dac6-a7c5-4a24-aca5-8576b4fa6cf9")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start -0.77 -0.41)
+		(end 0.77 0.41)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "d5cb0155-7897-41f9-bc57-2a970bcfb4b8")
+	)
+	(fp_line
+		(start -0.5 -0.3)
+		(end 0.5 -0.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "1020d3a2-2b2a-4f4e-bdbf-6019645d6323")
+	)
+	(fp_line
+		(start -0.5 0.3)
+		(end -0.5 -0.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b0c6931d-dd51-44b6-bfe2-f5becb0580dd")
+	)
+	(fp_line
+		(start 0.5 -0.3)
+		(end 0.5 0.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8f0fed90-129d-4391-b1c2-36312e8a51ae")
+	)
+	(fp_line
+		(start 0.5 0.3)
+		(end -0.5 0.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "95eeda0c-5e58-48bd-9fcc-57427c46ad2e")
+	)
+	(pad "1" smd rect
+		(at -0.325 0)
+		(size 0.25 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "f4bcb4bd-f145-4576-8fa3-ce7bce61ec87")
+	)
+	(pad "2" smd rect
+		(at 0.325 0)
+		(size 0.25 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "5e939840-3e61-4c00-b9c9-0d5d0c511dca")
+	)
+	(pad "3" smd rect
+		(at -0.575 0 90)
+		(size 0.2 0.25)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "bf9a3de0-dabe-4917-b739-c5cf8a63fbb9")
+	)
+	(pad "4" smd rect
+		(at 0.575 0 90)
+		(size 0.2 0.25)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "4af12135-f10e-4607-a770-3a9c5313a70f")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/3dmodels/VESD03A1B-HD1-GS08_39b11dcae3.stp"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
