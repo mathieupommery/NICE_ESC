@@ -4,10 +4,10 @@
 
 ## Capabilities and key components
 
-- **4S–16S Li-ion design range**, covering 60 V-class applications; a fully charged 16S pack reaches **67.2 V**. An **84 V / 20S variant** is a development option with higher-voltage MOSFETs and a full bus-voltage margin review.
-- **200 A peak phase-current design target**, with double-pulse switching tests extended to approximately **328 A** at a 40 V bus. Higher pulse-current capability is being explored; this is not a continuous-current or thermal rating.
+- **4S–16S Li-ion design range** or **84 V / 20S variant** with higher-voltage MOSFETs.
+- **200 A peak phase-current design target**, with double-pulse switching tests extended to approximately **328 A** at a 40 V bus. Need a good cooling and test in continuous current.
 - Hardware for **six-step control, FOC, Hall-based position feedback and active rectification**, depending on the firmware.
-- **5–40 kHz PWM design range**, phase-current and voltage acquisition, temperature inputs, CAN, UART and SWD.
+- all TOLT top side cooled mosfet to keep the case cost low we only have to cool down one isde of the inverter, also no need for aluminium or copper pcb.
 
 | Function | Hardware |
 |---|---|
@@ -20,13 +20,13 @@
 | Interconnects | M5 battery/phase terminals and locking JST-GH signal connectors |
 | PCB stack-up | Four copper layers on the control board; two on the power board |
 
-The published switching measurements were made at approximately **40 V**, not at the maximum intended battery voltage. Operation at the upper end of the voltage/current range depends on switching overshoot, cooling, capacitor ratings and the complete populated BOM.
+The published switching measurements were made at approximately **40 V**, not at the maximum intended battery voltage.
 
 ## V2 architecture
 
 ![V2 hardware architecture: power and control boards](DOC_AND_SIMULATION/PICTURE/architecture_v2_en.png)
 
-The two boards share a common electrical reference. Gate drivers, gate components and current amplifiers are kept close to the power devices, so the board-to-board connections carry logic-level PWM and amplified measurements rather than long gate loops or raw shunt signals.
+The two boards share a common electrical reference. Gate drivers, gate components and current amplifiers are kept close to the power devices, so the board-to-board connections carry logic-level PWM and amplified measurements rather than long gate loops or raw shunt signals.An effort has been put on the esd and overvoltage protection, each voltage rail has it's on esd protection as well as each connection.
 
 ## Assembly and mechanical integration
 
@@ -46,11 +46,11 @@ The baseline device is the **IAUS300N10S5N015T**, an OptiMOS 5 100 V TOLT MOSFET
 | [IPTC017N12NM6](https://www.infineon.com/part/IPTC017N12NM6) | OptiMOS 6 | 120 V | 1.7 mΩ | Higher-voltage candidate |
 | [IPTC020N13NM6](https://www.infineon.com/part/IPTC020N13NM6) | OptiMOS 6 | 135 V | 2.0 mΩ | Additional voltage headroom |
 
-Values are the manufacturers' room-temperature specifications per MOSFET, not the resistance of the whole inverter. The 120 V option adds only 0.2 mΩ relative to the baseline. These TOLT candidates provide a path toward an 84 V bus variant, subject to checking the exact footprint/pinout, gate charge, switching behavior and voltage margins of the drivers, capacitors, auxiliary supplies and sensing circuits. Changing the MOSFET voltage rating alone does not qualify the complete board for 84 V.
+The 120 V option adds only 0.2 mΩ relative to the baseline.Also infineon will eventually create new optimos 8 mosfet in tolt wich can improve the choice.
 
 ## Double-pulse testing
 
-A double-pulse test first builds current in an air-core inductor, then captures turn-off and the subsequent turn-on under load. The measurements below were taken at approximately **40 V bus voltage and 200 A inductor current**, using an approximately **8 µH** air-core load and an **11 V** gate supply.
+A double-pulse test first builds current in an air-core inductor, then captures turn-off and the subsequent turn-on under load. The measurements below were taken at approximately **40 V bus voltage and 200 A inductor current**, using an approximately **8 µH** air-core load, all measurment are donne at 2.5Gsamples/s on tektronix MDO3034 scope with 1GHz probes.
 
 ![Measured V2 turn-on waveforms](DOC_AND_SIMULATION/PICTURE/dpt_turn_on_en.png)
 
@@ -82,5 +82,3 @@ For a first-order capacitive-ripple estimate, `ΔVpp ≈ Iphase,peak / (4 × fPW
 | [Board STEP models](HARDWARE/V2/3D/) | Mechanical board assemblies |
 | [Enclosure](HARDWARE/INVERTER_CASE_3D/) | Top and bottom STEP models |
 | [Documentation and simulation](DOC_AND_SIMULATION/) | DPT data, LTspice files and project media |
-
-Open either `.kicad_pro` file with **KiCad 10**. Project libraries use the `_local` suffix and `${KIPRJMOD}` paths; the required symbols, footprints and 3D models are included. This repository currently focuses on the hardware.
