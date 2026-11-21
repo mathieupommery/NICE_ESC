@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1060" viewBox="0 0 1500 1060"><rect width="100%" height="100%" fill="white"/><g font-family="Arial,sans-serif" fill="#172b3a">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#216b94"/></marker></defs>
+<text x="60" y="55" font-size="32" fill="#172b3a" text-anchor="start" font-weight="bold">NICE ESC | V2 hardware architecture</text>
+<rect x="40" y="90" width="630" height="780" rx="12" fill="#edf4fa" stroke="#89a4b9" stroke-width="2"/>
+<rect x="830" y="90" width="630" height="780" rx="12" fill="#f1f7f2" stroke="#89a4b9" stroke-width="2"/>
+<text x="70" y="135" font-size="26" fill="#172b3a" text-anchor="start" font-weight="bold">POWER PCB · 2 copper layers</text>
+<text x="860" y="135" font-size="26" fill="#172b3a" text-anchor="start" font-weight="bold">CONTROL PCB · 4 copper layers</text>
+<rect x="100" y="180" width="510" height="90" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="355.0" y="212" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">DC link + local decoupling</text>
+<text x="355.0" y="239" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Battery input / M5 terminals</text>
+<rect x="100" y="350" width="510" height="90" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="355.0" y="382" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">UCC27301A gate drivers</text>
+<text x="355.0" y="409" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Bootstrap supplies · local gate loops</text>
+<rect x="100" y="525" width="510" height="90" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="355.0" y="557" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Three MOSFET half-bridges</text>
+<text x="355.0" y="584" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">12 × TOLT MOSFETs · 2 per switch</text>
+<rect x="100" y="710" width="510" height="110" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="355.0" y="742" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Current, voltage and temperature sensing</text>
+<text x="355.0" y="769" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Shunts + INA241 current amplifiers</text>
+<text x="355.0" y="796" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Phase-voltage and temperature signals</text>
+<rect x="890" y="180" width="510" height="135" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="1145.0" y="212" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Auxiliary power rails</text>
+<text x="1145.0" y="239" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">LM5169: bus → 11 V · LMR51625: 11 → 5 V</text>
+<text x="1145.0" y="266" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">3.3 V digital + 3.3 V analog</text>
+<rect x="890" y="490" width="510" height="90" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="1145.0" y="522" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Analog acquisition</text>
+<text x="1145.0" y="549" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Switchable RC filters → ADC inputs</text>
+<rect x="890" y="710" width="510" height="110" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="1145.0" y="742" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">STM32G431CBU</text>
+<text x="1145.0" y="769" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Complementary PWM · ADC · timers</text>
+<text x="1145.0" y="796" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">FDCAN · SPI · DAC</text>
+<path d="M610 225 H890" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750" y="213" font-size="18" fill="#172b3a" text-anchor="middle" font-weight="normal">VIN</text>
+<path d="M100 225 H70 V570 H100" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M355 440 V525" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="365" y="485" font-size="18" fill="#172b3a" text-anchor="start" font-weight="normal">Gate / source return</text>
+<path d="M355 615 V710" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="365" y="665" font-size="18" fill="#172b3a" text-anchor="start" font-weight="normal">Local sensing</text>
+<path d="M1145 580 V710" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1160" y="650" font-size="18" fill="#172b3a" text-anchor="start" font-weight="normal">ADC signals</text>
+<path d="M610 765 H740 V535 H890" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750" y="520" font-size="17" fill="#172b3a" text-anchor="middle" font-weight="normal">Amplified signals</text>
+<path d="M890 755 H790 V395 H610" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750" y="380" font-size="18" fill="#172b3a" text-anchor="middle" font-weight="normal">Logic PWM</text>
+<path d="M890 275 H695 V330 H355 V350" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750" y="264" font-size="18" fill="#172b3a" text-anchor="middle" font-weight="normal">11 V</text>
+<rect x="70" y="920" width="410" height="80" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="275.0" y="952" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Motor phases U / V / W</text>
+<text x="275.0" y="979" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">M5 terminals</text>
+<path d="M100 570 H55 V960 H70" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="535" y="920" width="410" height="80" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="740.0" y="952" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">Hall + temperature inputs</text>
+<text x="740.0" y="979" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">JST-GH connectors</text>
+<rect x="1000" y="920" width="410" height="80" rx="12" fill="#f3f7fb" stroke="#89a4b9" stroke-width="2"/>
+<text x="1205.0" y="952" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="bold">CAN · UART · SWD</text>
+<text x="1205.0" y="979" font-size="21" fill="#172b3a" text-anchor="middle" font-weight="normal">Communication / debugging</text>
+<path d="M740 920 V890 H1080 V820" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1205 920 V820" fill="none" stroke="#216b94" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750" y="1040" font-size="22" fill="#172b3a" text-anchor="middle" font-weight="normal">Common electrical reference · no galvanic isolation</text></g></svg>

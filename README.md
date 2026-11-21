@@ -1,83 +1,86 @@
 # NICE ESC
 
-**Onduleur triphasé à deux cartes, conçu pour explorer la commande de moteurs BLDC/PMSM et la conversion d'énergie bidirectionnelle.**
+**A two-board, high-current three-phase inverter for BLDC/PMSM motor control and bidirectional power conversion.**
 
-Ce dépôt présente la partie **hardware V2** : conception électronique sous KiCad, intégration mécanique, modèles 3D et caractérisation des commutations par essai à double impulsion (*Double Pulse Test*, DPT).
+## Capabilities and key components
 
-## Architecture électronique
+- **4S–16S Li-ion design range**, covering 60 V-class applications; a fully charged 16S pack reaches **67.2 V**. An **84 V / 20S variant** is a development option with higher-voltage MOSFETs and a full bus-voltage margin review.
+- **200 A peak phase-current design target**, with double-pulse switching tests extended to approximately **328 A** at a 40 V bus. Higher pulse-current capability is being explored; this is not a continuous-current or thermal rating.
+- Hardware for **six-step control, FOC, Hall-based position feedback and active rectification**, depending on the firmware.
+- **5–40 kHz PWM design range**, phase-current and voltage acquisition, temperature inputs, CAN, UART and SWD.
 
-![Architecture électronique V2 : carte de puissance et carte de contrôle](DOC_AND_SIMULATION/PICTURE/architecture_v2.png)
-
-L'électronique est répartie entre deux PCB partageant une référence électrique commune, sans isolation galvanique :
-
-- **Carte de puissance** : bus continu, condensateurs de découplage, trois demi-ponts MOSFET, drivers de grille et mesure des courants par shunts.
-- **Carte de contrôle** : microcontrôleur STM32G4, alimentations auxiliaires, acquisition analogique, filtrage et interfaces de communication.
-
-Les drivers et les amplificateurs de courant sont placés sur la carte de puissance, au plus près des MOSFET et des shunts. Les connexions entre cartes transportent les PWM logiques et les mesures déjà amplifiées : les boucles de commande de grille restent courtes et les faibles tensions des shunts sont traitées localement.
-
-## Rendu de l'ensemble
-
-![Rendu 3D de l'onduleur V2 assemblé dans son boîtier](DOC_AND_SIMULATION/PICTURE/render_inverter.png)
-
-La carte de contrôle se superpose à la carte de puissance. Les raccordements batterie et moteur utilisent des plots M5 ; les interfaces de signaux utilisent des connecteurs JST-GH. Les modèles STEP des cartes et du boîtier sont inclus dans le dépôt.
-
-## Possibilités du hardware
-
-| Fonction | Mise en œuvre |
+| Function | Hardware |
 |---|---|
-| Commande triphasée | Trois demi-ponts, avec deux MOSFET IAUS300N10S5N015T en parallèle par interrupteur, soit 12 MOSFET au total |
-| Commande de grille | Drivers UCC27301A avec circuits bootstrap et alimentation d'environ 11 V |
-| Calcul et PWM | STM32G431CBU, PWM complémentaires et acquisition ADC pour le développement de commandes moteur |
-| Mesure de courant | Shunts et amplificateurs INA241 sur la carte de puissance |
-| Acquisition | Mesures de courant, tensions de phase et températures ; filtres RC commutables sur la carte de contrôle |
-| Retour de position | Entrées pour capteurs Hall du moteur |
-| Communication et mise au point | Interface CAN, UART et accès SWD |
-| Alimentations auxiliaires | Conversion du bus vers 11 V puis 5 V, avec rails 3,3 V logique et analogique |
+| Controller | STM32G431CBU, complementary PWM and synchronized ADC acquisition |
+| Power switches | 12 × IAUS300N10S5N015T, with two MOSFETs in parallel per switch |
+| Gate drive | UCC27301A half-bridge drivers, bootstrap circuits and approximately 11 V gate supply |
+| Current sensing | Shunts and INA241 amplifiers located on the power PCB |
+| Signal conditioning | Switchable RC filters for current and voltage measurements |
+| Auxiliary rails | LM5169 bus-to-11 V buck, LMR51625 11-to-5 V buck, separate 3.3 V digital and analog rails |
+| Interconnects | M5 battery/phase terminals and locking JST-GH signal connectors |
+| PCB stack-up | Four copper layers on the control board; two on the power board |
 
-Cette base matérielle permet de développer des commandes six-pas ou FOC, d'exploiter les capteurs Hall et d'étudier le fonctionnement moteur ou le redressement actif, selon le firmware utilisé. Le présent dépôt est consacré à l'électronique et à ses essais.
+The published switching measurements were made at approximately **40 V**, not at the maximum intended battery voltage. Operation at the upper end of the voltage/current range depends on switching overshoot, cooling, capacitor ratings and the complete populated BOM.
 
-Le dimensionnement vise notamment un bus de **15 à 48 V**, un courant de phase de **200 A crête** et une fréquence de découpage de **5 à 40 kHz**. Ce sont des objectifs de conception : les résultats de commutation présentés ci-dessous ont été obtenus à environ **40 V / 200 A** et ne constituent pas une qualification à 200 A continus.
+## V2 architecture
 
-## Assemblage en animation
+![V2 hardware architecture: power and control boards](DOC_AND_SIMULATION/PICTURE/architecture_v2_en.png)
 
-![Animation de l'assemblage mécanique et des deux cartes de NICE ESC](DOC_AND_SIMULATION/PICTURE/inverter_animation_final.gif)
+The two boards share a common electrical reference. Gate drivers, gate components and current amplifiers are kept close to the power devices, so the board-to-board connections carry logic-level PWM and amplified measurements rather than long gate loops or raw shunt signals.
 
-## Caractérisation par Double Pulse Test
+## Assembly and mechanical integration
 
-Le DPT permet d'observer la commutation d'un demi-pont sous charge inductive. La première impulsion établit le courant dans une bobine à air ; sa fin permet d'étudier l'extinction des MOSFET. Après une courte phase de roue libre, la seconde impulsion permet d'observer leur réallumage sous courant.
+![NICE ESC assembly render](DOC_AND_SIMULATION/PICTURE/render_inverter.png)
 
-| Paramètre de l'essai | Condition |
+The control PCB sits above the power PCB. Top-side-cooled TOLT MOSFETs are mounted on the underside of the power board, providing access to their cooling surfaces. STEP models of both boards and the enclosure are included.
+
+![Exploded assembly animation](DOC_AND_SIMULATION/PICTURE/inverter_animation_final.gif)
+
+## TOLT MOSFET options
+
+The baseline device is the **IAUS300N10S5N015T**, an OptiMOS 5 100 V TOLT MOSFET. Higher-voltage OptiMOS 6 devices offer a useful trade-off between voltage headroom and on-resistance:
+
+| Device | Technology | VDS rating | Maximum RDS(on), VGS = 10 V | Role |
+|---|---|---:|---:|---|
+| [IAUS300N10S5N015T](https://www.infineon.com/part/IAUS300N10S5N015T) | OptiMOS 5 | 100 V | 1.5 mΩ | Baseline build |
+| [IPTC017N12NM6](https://www.infineon.com/part/IPTC017N12NM6) | OptiMOS 6 | 120 V | 1.7 mΩ | Higher-voltage candidate |
+| [IPTC020N13NM6](https://www.infineon.com/part/IPTC020N13NM6) | OptiMOS 6 | 135 V | 2.0 mΩ | Additional voltage headroom |
+
+Values are the manufacturers' room-temperature specifications per MOSFET, not the resistance of the whole inverter. The 120 V option adds only 0.2 mΩ relative to the baseline. These TOLT candidates provide a path toward an 84 V bus variant, subject to checking the exact footprint/pinout, gate charge, switching behavior and voltage margins of the drivers, capacitors, auxiliary supplies and sensing circuits. Changing the MOSFET voltage rating alone does not qualify the complete board for 84 V.
+
+## Double-pulse testing
+
+A double-pulse test first builds current in an air-core inductor, then captures turn-off and the subsequent turn-on under load. The measurements below were taken at approximately **40 V bus voltage and 200 A inductor current**, using an approximately **8 µH** air-core load and an **11 V** gate supply.
+
+![Measured V2 turn-on waveforms](DOC_AND_SIMULATION/PICTURE/dpt_turn_on_en.png)
+
+![Measured V2 turn-off waveforms](DOC_AND_SIMULATION/PICTURE/dpt_turn_off_en.png)
+
+At 200 A, the recorded drain-source peaks remain around **60 V on a 40 V bus**, leaving substantial headroom below the baseline MOSFET's 100 V rating. The extracted VDS transition times are approximately **101 ns at turn-on** and **33 ns at turn-off**. These are voltage-edge durations, not complete gate-command delays.
+
+The test campaign was also pushed to approximately **328 A**, the current acquisition range limit, without a notable increase in the observed VDS peaks. The plots shown here are the **200 A acquisition**. These short-pulse results are encouraging for the commutation layout; sustained phase-current capability still depends on thermal validation.
+
+The measured current is the inductor current, so the captures are used to assess overshoot and ringing rather than to claim precise Eon/Eoff measurements. [Raw acquisitions and the viewer](DOC_AND_SIMULATION/DPT_200A/) and the [LTspice test circuit](DOC_AND_SIMULATION/LTSPICE_SIMULATION_DPT/) are included.
+
+## DC-link decoupling
+
+The DC link combines bulk energy storage with local, low-inductance ceramic decoupling:
+
+| Capacitor bank | Selection | Purpose |
+|---|---|---|
+| Bulk electrolytics | **4 × 820 µF / 100 V = 3280 µF** | Reduce the lower-frequency DC-link ripple and supply transient energy |
+| Local MLCCs | **18 × 4.7 µF / 100 V, 2220 = 84.6 µF nominal** | Supply fast switching-current loops close to the half-bridges and limit parasitic-inductance overshoot |
+
+For a first-order capacitive-ripple estimate, `ΔVpp ≈ Iphase,peak / (4 × fPWM × Cbulk)`. At **200 A and 20 kHz**, a 2 V ripple target gives **1250 µF minimum**; the selected 3280 µF gives approximately **0.76 V calculated capacitive ripple**. Actual ripple also depends on ESR/ESL, RMS current and temperature. The MLCC total is nominal: effective capacitance falls with DC bias. Placement and short commutation loops matter alongside the capacitance value.
+
+## Repository
+
+| Directory | Contents |
 |---|---|
-| Tension du bus continu | Environ 40 V |
-| Courant au premier blocage | Environ 200 A dans l'inductance |
-| Charge | Bobine à air d'environ 8 µH |
-| Commande de grille | Environ 11 V |
-| Grandeurs observées | Tension grille-source VGS, tension drain-source VDS, courant de l'inductance et tension de bus |
+| [Control PCB](HARDWARE/V2/CONTROL_BOARD_V2/) | KiCad project, schematics, layout and local libraries |
+| [Power PCB](HARDWARE/V2/POWER_BOARD_V2/) | KiCad project, schematics, layout and local libraries |
+| [Board STEP models](HARDWARE/V2/3D/) | Mechanical board assemblies |
+| [Enclosure](HARDWARE/INVERTER_CASE_3D/) | Top and bottom STEP models |
+| [Documentation and simulation](DOC_AND_SIMULATION/) | DPT data, LTspice files and project media |
 
-### Allumage
-
-![DPT : tensions de grille et drain-source lors de l'allumage, mesures et simulation](DOC_AND_SIMULATION/PICTURE/dpt_turn_on.png)
-
-Sur la V2, la descente de VDS entre les seuils indiqués de 36 V et 4 V dure environ **101 ns**. Les courbes comparent la V2 à une première itération de référence et à une simulation LTspice.
-
-### Extinction
-
-![DPT : tensions de grille et drain-source lors de l'extinction, mesures et simulation](DOC_AND_SIMULATION/PICTURE/dpt_turn_off.png)
-
-Le front montant de VDS, entre les seuils indiqués de 3,6 V et 40,8 V, dure environ **33 ns** sur la V2. Les oscillations après extinction s'amortissent plus rapidement que sur la première itération dans cette acquisition. Ces valeurs caractérisent les fronts de tension mesurés ; elles ne représentent pas les délais complets de commande des MOSFET.
-
-Le courant acquis est celui de l'inductance, et non directement le courant drain pendant les transitions. Ces acquisitions servent donc à examiner les fronts, les surtensions et les oscillations de grille, sans en déduire une mesure précise des énergies de commutation Eon/Eoff.
-
-Les [acquisitions et le script de visualisation](DOC_AND_SIMULATION/DPT_200A/) ainsi que le [circuit LTspice](DOC_AND_SIMULATION/LTSPICE_SIMULATION_DPT/) sont disponibles. Le modèle LTspice fourni utilise notamment un bus de 40,2 V, une inductance de 10 µH avec 0,15 Ω de résistance série, une première impulsion de 93 µs et des durées de roue libre et de seconde impulsion de 2 µs.
-
-## Explorer les fichiers
-
-| Dossier | Contenu |
-|---|---|
-| [Carte de contrôle V2](HARDWARE/V2/CONTROL_BOARD_V2/) | Projet KiCad, schémas, PCB, bibliothèques locales et modèles 3D |
-| [Carte de puissance V2](HARDWARE/V2/POWER_BOARD_V2/) | Projet KiCad, schémas, PCB, bibliothèques locales et modèles 3D |
-| [Assemblages STEP](HARDWARE/V2/3D/) | Modèles 3D des cartes |
-| [Boîtier](HARDWARE/INVERTER_CASE_3D/) | Modèles STEP des parties supérieure et inférieure |
-| [Documentation et essais](DOC_AND_SIMULATION/) | Simulation DPT, acquisitions et médias du projet |
-
-Pour ouvrir les cartes, utiliser **KiCad 10** et charger le fichier `.kicad_pro` du projet souhaité. Les bibliothèques suffixées `_local` et les modèles 3D sont inclus ; leurs chemins utilisent `${KIPRJMOD}` pour rester relatifs au dossier du projet.
+Open either `.kicad_pro` file with **KiCad 10**. Project libraries use the `_local` suffix and `${KIPRJMOD}` paths; the required symbols, footprints and 3D models are included. This repository currently focuses on the hardware.
